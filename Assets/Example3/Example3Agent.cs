@@ -6,14 +6,17 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 
-public class Example1Agent : Agent
+public class Example3Agent : Agent
 {
     [SerializeField]
     private Transform targetTransform;
     public float moveSpeed = 2f;
 
+    public MeshRenderer floorMeshRenderer;
+
     public override void OnEpisodeBegin()
     {
+        //floorMeshRenderer.material.color = Color.white;
         transform.GetComponentInParent<EnvController>().ResetEnv();
     }
 
@@ -27,6 +30,7 @@ public class Example1Agent : Agent
 
         if (this.transform.localPosition.y < 0)
         {
+            floorMeshRenderer.material.color = Color.red;
             SetReward(-1);
             EndEpisode();
         }
@@ -49,6 +53,7 @@ public class Example1Agent : Agent
     {
         if(collision.gameObject.name == "Target")
         {
+            floorMeshRenderer.material.color = Color.green;
             SetReward(1);
             EndEpisode();
         }
